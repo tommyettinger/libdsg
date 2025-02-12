@@ -21,7 +21,6 @@ public class CollisionResolver {
     private final Array<Ball> balls;
     private final Array<PolyBall> polyBalls;
     public int maxIterations = 1;
-    private long time;
 
     public CollisionResolver(DualSpatialGrid dualSpatialGrid, Array<Ball> balls, Array<PolyBall> polyBalls) {
         this.dualSpatialGrid = dualSpatialGrid;
@@ -31,7 +30,6 @@ public class CollisionResolver {
     }
 
     public void resolveAllCollisions() {
-        time = 0;
         dualSpatialGrid.clear();
         for (int i = 0; i < balls.size; i++) {
             dualSpatialGrid.insert(balls.get(i).getDSGObject());
@@ -45,7 +43,6 @@ public class CollisionResolver {
         for (int i = 0; i < polyBalls.size; i++) {
             resolveAllCollisions(dualSpatialGrid.getNearby(polyBalls.get(i).getDSGObject()));
         }
-        System.out.println(balls.size + " Time: " + time / 1e6 + " ms");
     }
 
     private void resolveAllCollisions(IndexedSet<DSGObject> dsgObjectSet) {
@@ -147,14 +144,11 @@ public class CollisionResolver {
     }
 
     private void keepInBounds(DSGObject dsgObject) {
-        long start = System.nanoTime();
         float x = MathUtils.clamp(dsgObject.getCenterX(), sizing.getOffsetX() + sizing.getBallRadius(),
                 sizing.getOffsetX() + sizing.getEffectiveWidth()  - sizing.getBallRadius());
         float y = MathUtils.clamp(dsgObject.getCenterY(), sizing.getOffsetY() + sizing.getBallRadius(),
                 sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallRadius());
         dsgObject.setPositionCentered(x, y);
-        long end = System.nanoTime();
-        time += end - start;
     }
 
     public void toggleIterations() {
