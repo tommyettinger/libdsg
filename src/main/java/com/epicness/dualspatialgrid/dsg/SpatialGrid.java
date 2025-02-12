@@ -3,6 +3,7 @@ package com.epicness.dualspatialgrid.dsg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.epicness.dualspatialgrid.Sizing;
 
 import java.util.HashSet;
@@ -13,31 +14,31 @@ public class SpatialGrid {
     public final Sprite[][] cells;
     public final float cellSize, xOffset, yOffset;
     public final Sprite[] cLines, rLines;
-    private final Set<DSGObject>[][] grid;
+    private final ObjectSet<DSGObject>[][] grid;
     public final Sizing sizing;
 
     @SuppressWarnings("unchecked")
     public SpatialGrid(Sizing sizing,
                        Sprite pixelSprite, Color color, Color lineColor) {
         this.sizing = sizing;
-        cells = new Sprite[sizing.getGridColumns()][];
+        cells = new Sprite[sizing.getGridColumns()][sizing.getGridRows()];
         this.cellSize = sizing.getCellSize();
         this.xOffset = sizing.getOffsetX();
         this.yOffset = sizing.getOffsetY();
 
         cLines = new Sprite[sizing.getGridColumns() - 1];
         rLines = new Sprite[sizing.getGridRows() - 1];
-        grid = new HashSet[sizing.getGridColumns()][sizing.getGridRows()];
+        grid = new ObjectSet[sizing.getGridColumns()][sizing.getGridRows()];
 
         for (int c = 0; c < cells.length; c++) {
-            cells[c] = new Sprite[sizing.getGridRows()];
+
             for (int r = 0; r < cells[c].length; r++) {
                 cells[c][r] = new Sprite(pixelSprite);
                 cells[c][r].setSize(cellSize, cellSize);
                 cells[c][r].setPosition(c * cellSize + xOffset, r * cellSize + yOffset);
                 cells[c][r].setColor(color);
 
-                grid[c][r] = new HashSet<>();
+                grid[c][r] = new ObjectSet<>();
             }
         }
 
@@ -87,7 +88,7 @@ public class SpatialGrid {
         grid[col][row].add(dsgObject);
     }
 
-    public Set<DSGObject> getDSGObjects(int col, int row) {
+    public ObjectSet<DSGObject> getDSGObjects(int col, int row) {
         return grid[col][row];
     }
 }

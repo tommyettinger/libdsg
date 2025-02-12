@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Ball;
 import com.epicness.dualspatialgrid.PolyBall;
 import com.epicness.dualspatialgrid.Sizing;
@@ -12,7 +13,6 @@ import com.epicness.dualspatialgrid.dsg.DSGObject;
 import com.epicness.dualspatialgrid.dsg.DSGPolygon;
 import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.utils.CollisionUtils;
-import com.epicness.dualspatialgrid.utils.IndexedSet;
 
 public class CollisionResolver {
 
@@ -45,18 +45,18 @@ public class CollisionResolver {
         }
     }
 
-    private void resolveAllCollisions(IndexedSet<DSGObject> dsgObjectSet) {
+    private void resolveAllCollisions(OrderedSet<DSGObject> dsgObjectSet) {
         boolean collisionsExist;
-
+        Array<DSGObject> dsgObjectArray = dsgObjectSet.orderedItems();
         for (int i = 0; i < maxIterations; i++) {
             collisionsExist = false;
-            for (int j = 0; j < dsgObjectSet.size(); j++) {
-                DSGObject a = dsgObjectSet.get(j);
-                if (j == dsgObjectSet.size() - 1) {
+            for (int j = 0; j < dsgObjectSet.size; j++) {
+                DSGObject a = dsgObjectArray.get(j);
+                if (j == dsgObjectSet.size - 1) {
                     keepInBounds(a);
                 }
-                for (int k = j + 1; k < dsgObjectSet.size(); k++) {
-                    DSGObject b = dsgObjectSet.get(k);
+                for (int k = j + 1; k < dsgObjectSet.size; k++) {
+                    DSGObject b = dsgObjectArray.get(k);
                     if (a instanceof DSGCircle && b instanceof DSGCircle) {
                         collisionsExist |= resolveCirclesCollision((DSGCircle) a, (DSGCircle) b);
                     } else if (a instanceof DSGCircle && b instanceof DSGPolygon) {

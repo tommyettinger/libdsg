@@ -3,8 +3,8 @@ package com.epicness.dualspatialgrid.dsg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Sizing;
-import com.epicness.dualspatialgrid.utils.IndexedSet;
 
 import static com.badlogic.gdx.graphics.Color.*;
 
@@ -13,7 +13,7 @@ public class DualSpatialGrid {
     private final SpatialGrid gridA, gridB;
     public final Sizing sizing;
     private final float cellSize, halfCellSize;
-    private final IndexedSet<DSGObject> nearby;
+    private final OrderedSet<DSGObject> nearby;
 
     public DualSpatialGrid(Sizing sizing, Sprite pixelSprite) {
         this.sizing = sizing;
@@ -22,7 +22,7 @@ public class DualSpatialGrid {
         gridA = new SpatialGrid(sizing, pixelSprite, SKY, BLUE);
         gridB = new SpatialGrid(sizing.expandedCopy(),
             pixelSprite, new Color(0f, 1f, 0f, 0.25f), FOREST);
-        nearby = new IndexedSet<>();
+        nearby = new OrderedSet<>();
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -67,7 +67,7 @@ public class DualSpatialGrid {
         dsgObject.row = row;
     }
 
-    public IndexedSet<DSGObject> getNearby(DSGObject dsgObject) {
+    public OrderedSet<DSGObject> getNearby(DSGObject dsgObject) {
         nearby.clear();
         SpatialGrid mainGrid = dsgObject.isGridA() ? gridA : gridB;
         SpatialGrid otherGrid = (mainGrid == gridA) ? gridB : gridA;
