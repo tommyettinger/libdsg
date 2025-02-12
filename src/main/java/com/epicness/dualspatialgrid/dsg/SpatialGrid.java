@@ -3,18 +3,15 @@ package com.epicness.dualspatialgrid.dsg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ObjectSet;
+import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Sizing;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class SpatialGrid {
 
     public final Sprite[][] cells;
     public final float cellSize, xOffset, yOffset;
     public final Sprite[] cLines, rLines;
-    private final ObjectSet<DSGObject>[][] grid;
+    private final OrderedSet<DSGObject>[][] grid;
     public final Sizing sizing;
 
     @SuppressWarnings("unchecked")
@@ -28,7 +25,7 @@ public class SpatialGrid {
 
         cLines = new Sprite[sizing.getGridColumns() - 1];
         rLines = new Sprite[sizing.getGridRows() - 1];
-        grid = new ObjectSet[sizing.getGridColumns()][sizing.getGridRows()];
+        grid = new OrderedSet[sizing.getGridColumns()][sizing.getGridRows()];
 
         for (int c = 0; c < cells.length; c++) {
 
@@ -38,7 +35,7 @@ public class SpatialGrid {
                 cells[c][r].setPosition(c * cellSize + xOffset, r * cellSize + yOffset);
                 cells[c][r].setColor(color);
 
-                grid[c][r] = new ObjectSet<>();
+                grid[c][r] = new OrderedSet<>();
             }
         }
 
@@ -89,7 +86,7 @@ public class SpatialGrid {
             grid[col][row].add(dsgObject);
     }
 
-    public ObjectSet<DSGObject> getDSGObjects(int col, int row) {
+    public OrderedSet<DSGObject> getDSGObjects(int col, int row) {
         return grid[col][row];
     }
 }
