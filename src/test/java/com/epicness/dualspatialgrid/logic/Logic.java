@@ -6,9 +6,9 @@ import com.badlogic.gdx.utils.Array;
 import com.epicness.dualspatialgrid.Ball;
 import com.epicness.dualspatialgrid.DualSpatialGridDemo;
 import com.epicness.dualspatialgrid.PolyBall;
+import com.epicness.dualspatialgrid.Sizing;
 
 import static com.badlogic.gdx.graphics.Color.SALMON;
-import static com.epicness.dualspatialgrid.Constants.*;
 
 public class Logic {
 
@@ -20,8 +20,11 @@ public class Logic {
     private final Array<Ball> balls;
     private final Array<PolyBall> polyBalls;
 
+    private final Sizing sizing;
+
 
     public Logic(DualSpatialGridDemo demo) {
+        sizing = demo.dualSpatialGrid.sizing;
         ballMover = new BallMover(demo.balls, demo.polyBalls);
         collisionResolver = new CollisionResolver(demo.dualSpatialGrid, demo.balls, demo.polyBalls);
         circle = demo.circle;
@@ -37,9 +40,11 @@ public class Logic {
     }
 
     private void spawnBall() {
-        Ball ball = new Ball(circle, BALL_SIZE, SALMON);
-        ball.getDSGObject().setX(MathUtils.random(GRID_X + BALL_SIZE, GRID_X + EFFECTIVE_WIDTH - BALL_SIZE));
-        ball.getDSGObject().setY(MathUtils.random(GRID_Y + BALL_SIZE, GRID_Y + EFFECTIVE_HEIGHT - BALL_SIZE));
+        Ball ball = new Ball(circle, sizing.getBallSize(), SALMON);
+        ball.getDSGObject().setX(MathUtils.random(sizing.getOffsetX() + sizing.getBallSize(),
+                sizing.getOffsetX() + sizing.getEffectiveWidth() - sizing.getBallSize()));
+        ball.getDSGObject().setY(MathUtils.random(sizing.getOffsetY() + sizing.getBallSize(),
+                sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallSize()));
         balls.add(ball);
     }
 
@@ -51,9 +56,11 @@ public class Logic {
     }
 
     private void spawnPolyBall() {
-        PolyBall ball = new PolyBall(circle, BALL_SIZE, SALMON);
-        ball.getDSGObject().setX(MathUtils.random(GRID_X + BALL_SIZE, GRID_X + EFFECTIVE_WIDTH - BALL_SIZE));
-        ball.getDSGObject().setY(MathUtils.random(GRID_Y + BALL_SIZE, GRID_Y + EFFECTIVE_HEIGHT - BALL_SIZE));
+        PolyBall ball = new PolyBall(circle, sizing.BALL_SIZE, SALMON);
+        ball.getDSGObject().setX(MathUtils.random(sizing.getOffsetX() + sizing.getBallSize(),
+                sizing.getOffsetX() + sizing.getEffectiveWidth() - sizing.getBallSize()));
+        ball.getDSGObject().setY(MathUtils.random(sizing.getOffsetY() + sizing.getBallSize(),
+                sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallSize()));
         polyBalls.add(ball);
     }
 

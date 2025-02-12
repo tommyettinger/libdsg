@@ -4,9 +4,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.epicness.dualspatialgrid.DualSpatialGridDemo;
 
-import static com.epicness.dualspatialgrid.Constants.WINDOW_HEIGHT;
-import static com.epicness.dualspatialgrid.Constants.WINDOW_WIDTH;
-
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
@@ -30,7 +27,7 @@ public class Lwjgl3Launcher {
         //// If you remove the above line and set Vsync to false, you can get unlimited FPS, which can be
         //// useful for testing performance, but can also be very stressful to some hardware.
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
-        configuration.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
+        configuration.setWindowedMode(1600, 920);
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
         return configuration;

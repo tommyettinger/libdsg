@@ -3,6 +3,7 @@ package com.epicness.dualspatialgrid.dsg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.epicness.dualspatialgrid.Sizing;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,46 +14,45 @@ public class SpatialGrid {
     public final float cellSize, xOffset, yOffset;
     public final Sprite[] cLines, rLines;
     private final Set<DSGObject>[][] grid;
+    public final Sizing sizing;
 
     @SuppressWarnings("unchecked")
-    public SpatialGrid(int columns, int rows, float cellSize, float xOffset, float yOffset,
+    public SpatialGrid(Sizing sizing,
                        Sprite pixelSprite, Color color, Color lineColor) {
-        cells = new Sprite[columns][];
-        this.cellSize = cellSize;
-        this.xOffset = xOffset;
-        this.yOffset = yOffset;
-        for (int c = 0; c < columns; c++) {
-            cells[c] = new Sprite[rows];
-            for (int r = 0; r < rows; r++) {
+        this.sizing = sizing;
+        cells = new Sprite[sizing.getGridColumns()][];
+        this.cellSize = sizing.getCellSize();
+        this.xOffset = sizing.getOffsetX();
+        this.yOffset = sizing.getOffsetY();
+
+        cLines = new Sprite[sizing.getGridColumns() - 1];
+        rLines = new Sprite[sizing.getGridRows() - 1];
+        grid = new HashSet[sizing.getGridColumns()][sizing.getGridRows()];
+
+        for (int c = 0; c < cells.length; c++) {
+            cells[c] = new Sprite[sizing.getGridRows()];
+            for (int r = 0; r < cells[c].length; r++) {
                 cells[c][r] = new Sprite(pixelSprite);
                 cells[c][r].setSize(cellSize, cellSize);
                 cells[c][r].setPosition(c * cellSize + xOffset, r * cellSize + yOffset);
                 cells[c][r].setColor(color);
+
+                grid[c][r] = new HashSet<>();
             }
         }
 
-        cLines = new Sprite[columns - 1];
         for (int c = 0; c < cLines.length; ) {
             cLines[c] = new Sprite(pixelSprite);
             cLines[c].setColor(lineColor);
-            cLines[c].setSize(2f, rows * cellSize);
+            cLines[c].setSize(2f, sizing.getGridRows() * cellSize);
             cLines[c].setPosition(cellSize * ++c + xOffset, yOffset);
         }
 
-        rLines = new Sprite[rows - 1];
         for (int r = 0; r < rLines.length; ) {
             rLines[r] = new Sprite(pixelSprite);
             rLines[r].setColor(lineColor);
-            rLines[r].setSize(columns * cellSize, 2f);
+            rLines[r].setSize(sizing.getGridColumns() * cellSize, 2f);
             rLines[r].setPosition(xOffset, cellSize * ++r + yOffset);
-        }
-
-        grid = new HashSet[columns][rows];
-
-        for (int x = 0; x < columns; x++) {
-            for (int y = 0; y < rows; y++) {
-                grid[x][y] = new HashSet<>();
-            }
         }
     }
 

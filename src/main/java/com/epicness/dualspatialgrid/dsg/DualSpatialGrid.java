@@ -3,6 +3,7 @@ package com.epicness.dualspatialgrid.dsg;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.epicness.dualspatialgrid.Sizing;
 import com.epicness.dualspatialgrid.utils.IndexedSet;
 
 import static com.badlogic.gdx.graphics.Color.*;
@@ -10,14 +11,16 @@ import static com.badlogic.gdx.graphics.Color.*;
 public class DualSpatialGrid {
 
     private final SpatialGrid gridA, gridB;
+    public final Sizing sizing;
     private final float cellSize, halfCellSize;
     private final IndexedSet<DSGObject> nearby;
 
-    public DualSpatialGrid(int cols, int rows, float cellSize, float xOffset, float yOffset, Sprite pixelSprite) {
-        this.cellSize = cellSize;
-        this.halfCellSize = cellSize / 2f;
-        gridA = new SpatialGrid(cols, rows, cellSize, xOffset, yOffset, pixelSprite, SKY, BLUE);
-        gridB = new SpatialGrid(cols + 1, rows + 1, cellSize, xOffset - halfCellSize, yOffset - halfCellSize,
+    public DualSpatialGrid(Sizing sizing, Sprite pixelSprite) {
+        this.sizing = sizing;
+        this.cellSize = sizing.CELL_SIZE;
+        this.halfCellSize = sizing.CELL_SIZE * 0.5f;
+        gridA = new SpatialGrid(sizing, pixelSprite, SKY, BLUE);
+        gridB = new SpatialGrid(sizing.expandedCopy(),
             pixelSprite, new Color(0f, 1f, 0f, 0.25f), FOREST);
         nearby = new IndexedSet<>();
     }

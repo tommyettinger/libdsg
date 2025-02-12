@@ -11,7 +11,6 @@ import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.logic.Logic;
 
 import static com.badlogic.gdx.graphics.Color.TAN;
-import static com.epicness.dualspatialgrid.Constants.*;
 
 public class DualSpatialGridDemo extends Game {
 
@@ -32,7 +31,7 @@ public class DualSpatialGridDemo extends Game {
         Sprite pixel = new Sprite(new Texture("pixel.png"));
         circle = new Sprite(new Texture("circle.png"));
 
-        dualSpatialGrid = new DualSpatialGrid(GRID_COLUMNS, GRID_ROWS, CELL_SIZE, GRID_X, GRID_Y, pixel);
+        dualSpatialGrid = new DualSpatialGrid(new Sizing(), pixel);
         balls = new Array<>();
         polyBalls = new Array<>();
         spriteBatch = new SpriteBatch();

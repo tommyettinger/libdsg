@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.epicness.dualspatialgrid.Ball;
 import com.epicness.dualspatialgrid.PolyBall;
+import com.epicness.dualspatialgrid.Sizing;
 import com.epicness.dualspatialgrid.dsg.DSGCircle;
 import com.epicness.dualspatialgrid.dsg.DSGObject;
 import com.epicness.dualspatialgrid.dsg.DSGPolygon;
@@ -13,15 +14,10 @@ import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.utils.CollisionUtils;
 import com.epicness.dualspatialgrid.utils.IndexedSet;
 
-import static com.epicness.dualspatialgrid.Constants.BALL_RADIUS;
-import static com.epicness.dualspatialgrid.Constants.EFFECTIVE_HEIGHT;
-import static com.epicness.dualspatialgrid.Constants.EFFECTIVE_WIDTH;
-import static com.epicness.dualspatialgrid.Constants.GRID_X;
-import static com.epicness.dualspatialgrid.Constants.GRID_Y;
-
 public class CollisionResolver {
 
     private final DualSpatialGrid dualSpatialGrid;
+    private final Sizing sizing;
     private final Array<Ball> balls;
     private final Array<PolyBall> polyBalls;
     public int maxIterations = 1;
@@ -29,6 +25,7 @@ public class CollisionResolver {
 
     public CollisionResolver(DualSpatialGrid dualSpatialGrid, Array<Ball> balls, Array<PolyBall> polyBalls) {
         this.dualSpatialGrid = dualSpatialGrid;
+        this.sizing = dualSpatialGrid.sizing;
         this.balls = balls;
         this.polyBalls = polyBalls;
     }
@@ -151,8 +148,10 @@ public class CollisionResolver {
 
     private void keepInBounds(DSGObject dsgObject) {
         long start = System.nanoTime();
-        float x = MathUtils.clamp(dsgObject.getCenterX(), GRID_X + BALL_RADIUS, GRID_X + EFFECTIVE_WIDTH - BALL_RADIUS);
-        float y = MathUtils.clamp(dsgObject.getCenterY(), GRID_Y + BALL_RADIUS, GRID_Y + EFFECTIVE_HEIGHT - BALL_RADIUS);
+        float x = MathUtils.clamp(dsgObject.getCenterX(), sizing.getOffsetX() + sizing.getBallRadius(),
+                sizing.getOffsetX() + sizing.getEffectiveWidth()  - sizing.getBallRadius());
+        float y = MathUtils.clamp(dsgObject.getCenterY(), sizing.getOffsetY() + sizing.getBallRadius(),
+                sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallRadius());
         dsgObject.setPositionCentered(x, y);
         long end = System.nanoTime();
         time += end - start;
