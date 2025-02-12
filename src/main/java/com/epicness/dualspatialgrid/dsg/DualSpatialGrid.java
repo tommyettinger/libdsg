@@ -72,10 +72,11 @@ public class DualSpatialGrid {
         SpatialGrid mainGrid = dsgObject.isGridA() ? gridA : gridB;
         SpatialGrid otherGrid = (mainGrid == gridA) ? gridB : gridA;
 
-        int col = (int) ((dsgObject.getCenterX() - mainGrid.xOffset) / cellSize);
-        int row = (int) ((dsgObject.getCenterY() - mainGrid.yOffset) / cellSize);
+        // surprisingly, the min(max(clampedValue, lowerLimit), upperLimit) is faster than MathUtils.clamp .
+        int col = Math.min(Math.max((int) ((dsgObject.getCenterX() - mainGrid.xOffset) / cellSize), 0), otherGrid.cLines.length);
+        int row = Math.min(Math.max((int) ((dsgObject.getCenterY() - mainGrid.yOffset) / cellSize), 0), otherGrid.rLines.length);
 
-        nearby.addAll(mainGrid.getDSGObjects(col, row));
+//        nearby.addAll(mainGrid.getDSGObjects(col, row));
 
         if (mainGrid == gridA) {
             for (int c = col; c < col + 2 && c < otherGrid.cells.length; c++) {

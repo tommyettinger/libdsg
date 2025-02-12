@@ -85,7 +85,8 @@ public class SpatialGrid {
         int col = (int) ((dsgObject.getCenterX() - xOffset) / cellSize);
         int row = (int) ((dsgObject.getCenterY() - yOffset) / cellSize);
 
-        grid[col][row].add(dsgObject);
+        if(col >= 0 && col < grid.length && row >= 0 && row < grid[col].length)
+            grid[col][row].add(dsgObject);
     }
 
     public ObjectSet<DSGObject> getDSGObjects(int col, int row) {
