@@ -11,7 +11,7 @@ public class SpatialGrid {
     public final Sprite[][] cells;
     public final float cellSize, xOffset, yOffset;
     public final Sprite[] cLines, rLines;
-    private final OrderedSet<DSGObject>[][] grid;
+    private final OrderedSet<DSGItem>[][] grid;
     public final Sizing sizing;
 
     @SuppressWarnings("unchecked")
@@ -78,15 +78,15 @@ public class SpatialGrid {
         }
     }
 
-    public void insert(DSGObject dsgObject) {
-        int col = (int) ((dsgObject.getCenterX() - xOffset) / cellSize);
-        int row = (int) ((dsgObject.getCenterY() - yOffset) / cellSize);
+    public void insert(DSGItem dsgItem) {
+        int col = (int) ((dsgItem.getCenterX() - xOffset) / cellSize);
+        int row = (int) ((dsgItem.getCenterY() - yOffset) / cellSize);
 
         if(col >= 0 && col < grid.length && row >= 0 && row < grid[col].length)
-            grid[col][row].add(dsgObject);
+            grid[col][row].add(dsgItem);
     }
 
-    public OrderedSet<DSGObject> getDSGObjects(int col, int row) {
+    public OrderedSet<DSGItem> getDSGItems(int col, int row) {
         return grid[col][row];
     }
 }

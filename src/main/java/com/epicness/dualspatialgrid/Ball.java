@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.epicness.dualspatialgrid.dsg.DSGCircle;
-import com.epicness.dualspatialgrid.dsg.HasDSGObject;
+import com.epicness.dualspatialgrid.dsg.HasDSGItem;
 
-public class Ball implements HasDSGObject {
+public class Ball implements HasDSGItem {
 
     public final Sprite sprite;
     private final DSGCircle circle;
@@ -30,7 +30,7 @@ public class Ball implements HasDSGObject {
     }
 
     @Override
-    public DSGCircle getDSGObject() {
+    public DSGCircle getDSGItem() {
         return circle;
     }
 }

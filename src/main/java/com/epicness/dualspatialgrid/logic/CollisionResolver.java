@@ -9,7 +9,7 @@ import com.epicness.dualspatialgrid.Ball;
 import com.epicness.dualspatialgrid.PolyBall;
 import com.epicness.dualspatialgrid.Sizing;
 import com.epicness.dualspatialgrid.dsg.DSGCircle;
-import com.epicness.dualspatialgrid.dsg.DSGObject;
+import com.epicness.dualspatialgrid.dsg.DSGItem;
 import com.epicness.dualspatialgrid.dsg.DSGPolygon;
 import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.utils.CollisionUtils;
@@ -32,31 +32,31 @@ public class CollisionResolver {
     public void resolveAllCollisions() {
         dualSpatialGrid.clear();
         for (int i = 0; i < balls.size; i++) {
-            dualSpatialGrid.insert(balls.get(i).getDSGObject());
+            dualSpatialGrid.insert(balls.get(i).getDSGItem());
         }
         for (int i = 0; i < polyBalls.size; i++) {
-            dualSpatialGrid.insert(polyBalls.get(i).getDSGObject());
+            dualSpatialGrid.insert(polyBalls.get(i).getDSGItem());
         }
         for (int i = 0; i < balls.size; i++) {
-            resolveAllCollisions(dualSpatialGrid.getNearby(balls.get(i).getDSGObject()));
+            resolveAllCollisions(dualSpatialGrid.getNearby(balls.get(i).getDSGItem()));
         }
         for (int i = 0; i < polyBalls.size; i++) {
-            resolveAllCollisions(dualSpatialGrid.getNearby(polyBalls.get(i).getDSGObject()));
+            resolveAllCollisions(dualSpatialGrid.getNearby(polyBalls.get(i).getDSGItem()));
         }
     }
 
-    private void resolveAllCollisions(OrderedSet<DSGObject> dsgObjectSet) {
+    private void resolveAllCollisions(OrderedSet<DSGItem> dsgItemSet) {
         boolean collisionsExist;
-        Array<DSGObject> dsgObjectArray = dsgObjectSet.orderedItems();
+        Array<DSGItem> dsgItemArray = dsgItemSet.orderedItems();
         for (int i = 0; i < maxIterations; i++) {
             collisionsExist = false;
-            for (int j = 0; j < dsgObjectSet.size; j++) {
-                DSGObject a = dsgObjectArray.get(j);
-                if (j == dsgObjectSet.size - 1) {
+            for (int j = 0; j < dsgItemSet.size; j++) {
+                DSGItem a = dsgItemArray.get(j);
+                if (j == dsgItemSet.size - 1) {
                     keepInBounds(a);
                 }
-                for (int k = j + 1; k < dsgObjectSet.size; k++) {
-                    DSGObject b = dsgObjectArray.get(k);
+                for (int k = j + 1; k < dsgItemSet.size; k++) {
+                    DSGItem b = dsgItemArray.get(k);
                     if (a instanceof DSGCircle && b instanceof DSGCircle) {
                         collisionsExist |= resolveCirclesCollision((DSGCircle) a, (DSGCircle) b);
                     } else if (a instanceof DSGCircle && b instanceof DSGPolygon) {
@@ -143,12 +143,12 @@ public class CollisionResolver {
         return false;
     }
 
-    private void keepInBounds(DSGObject dsgObject) {
-        float x = MathUtils.clamp(dsgObject.getCenterX(), sizing.getOffsetX() + sizing.getBallRadius(),
+    private void keepInBounds(DSGItem dsgItem) {
+        float x = MathUtils.clamp(dsgItem.getCenterX(), sizing.getOffsetX() + sizing.getBallRadius(),
                 sizing.getOffsetX() + sizing.getEffectiveWidth()  - sizing.getBallRadius());
-        float y = MathUtils.clamp(dsgObject.getCenterY(), sizing.getOffsetY() + sizing.getBallRadius(),
+        float y = MathUtils.clamp(dsgItem.getCenterY(), sizing.getOffsetY() + sizing.getBallRadius(),
                 sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallRadius());
-        dsgObject.setPositionCentered(x, y);
+        dsgItem.setPositionCentered(x, y);
     }
 
     public void toggleIterations() {

@@ -2,7 +2,7 @@ package com.epicness.dualspatialgrid.dsg;
 
 import com.badlogic.gdx.math.Circle;
 
-public class DSGCircle extends DSGObject {
+public class DSGCircle extends DSGItem {
 
     private final Circle circle;
 

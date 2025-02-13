@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.epicness.dualspatialgrid.Ball;
 import com.epicness.dualspatialgrid.PolyBall;
-import com.epicness.dualspatialgrid.dsg.DSGObject;
+import com.epicness.dualspatialgrid.dsg.DSGItem;
 
 public class BallMover {
 
@@ -21,20 +21,20 @@ public class BallMover {
 
     public void moveBalls(float delta) {
         for (int i = 0; i < balls.size; i++) {
-            moveBall(balls.get(i).getDSGObject(), delta);
+            moveBall(balls.get(i).getDSGItem(), delta);
         }
         for (int i = 0; i < polyBalls.size; i++) {
-            moveBall(polyBalls.get(i).getDSGObject(), delta);
+            moveBall(polyBalls.get(i).getDSGItem(), delta);
         }
     }
 
-    private void moveBall(DSGObject dsgObject, float delta) {
-        dir.set(target).sub(dsgObject.getCenter());
+    private void moveBall(DSGItem dsgItem, float delta) {
+        dir.set(target).sub(dsgItem.getCenter());
         if (dir.len() < 5f) {
-            dsgObject.setPositionCentered(target.x, target.y);
+            dsgItem.setPositionCentered(target.x, target.y);
             return;
         }
         dir.nor().scl(100f * delta);
-        dsgObject.translate(dir);
+        dsgItem.translate(dir);
     }
 }

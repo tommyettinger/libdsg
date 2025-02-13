@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.epicness.dualspatialgrid.dsg.DSGPolygon;
-import com.epicness.dualspatialgrid.dsg.HasDSGObject;
+import com.epicness.dualspatialgrid.dsg.HasDSGItem;
 
 /**
  * Balls with polygonal bounds, noticeable less efficient than circle bounds
  */
-public class PolyBall implements HasDSGObject {
+public class PolyBall implements HasDSGItem {
 
     public final Sprite sprite;
     private final DSGPolygon polygon;
@@ -40,7 +40,7 @@ public class PolyBall implements HasDSGObject {
     }
 
     @Override
-    public DSGPolygon getDSGObject() {
+    public DSGPolygon getDSGItem() {
         return polygon;
     }
 }

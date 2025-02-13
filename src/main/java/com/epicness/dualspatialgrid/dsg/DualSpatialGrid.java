@@ -13,7 +13,7 @@ public class DualSpatialGrid {
     private final SpatialGrid gridA, gridB;
     public final Sizing sizing;
     private final float cellSize, halfCellSize;
-    private final OrderedSet<DSGObject> nearby;
+    private final OrderedSet<DSGItem> nearby;
 
     public DualSpatialGrid(Sizing sizing, Sprite pixelSprite) {
         this.sizing = sizing;
@@ -35,9 +35,9 @@ public class DualSpatialGrid {
         gridB.clear();
     }
 
-    public void insert(DSGObject dsgObject) {
-        float x = dsgObject.getCenterX();
-        float y = dsgObject.getCenterY();
+    public void insert(DSGItem dsgItem) {
+        float x = dsgItem.getCenterX();
+        float y = dsgItem.getCenterY();
         float xA = x - gridA.xOffset;
         float yA = y - gridA.yOffset;
         float xB = x - gridB.xOffset;
@@ -55,39 +55,39 @@ public class DualSpatialGrid {
         if (distA < distB) {
             col = (int) (xA / cellSize);
             row = (int) (yA / cellSize);
-            dsgObject.setGridA(true);
+            dsgItem.setGridA(true);
         } else {
             col = (int) (xB / cellSize);
             row = (int) (yB / cellSize);
-            dsgObject.setGridA(false);
+            dsgItem.setGridA(false);
         }
-        gridA.insert(dsgObject);
-        gridB.insert(dsgObject);
-        dsgObject.col = col;
-        dsgObject.row = row;
+        gridA.insert(dsgItem);
+        gridB.insert(dsgItem);
+        dsgItem.col = col;
+        dsgItem.row = row;
     }
 
-    public OrderedSet<DSGObject> getNearby(DSGObject dsgObject) {
+    public OrderedSet<DSGItem> getNearby(DSGItem dsgItem) {
         nearby.clear();
-        SpatialGrid mainGrid = dsgObject.isGridA() ? gridA : gridB;
+        SpatialGrid mainGrid = dsgItem.isGridA() ? gridA : gridB;
         SpatialGrid otherGrid = (mainGrid == gridA) ? gridB : gridA;
 
         // surprisingly, the min(max(clampedValue, lowerLimit), upperLimit) is faster than MathUtils.clamp .
-        int col = Math.min(Math.max((int) ((dsgObject.getCenterX() - mainGrid.xOffset) / cellSize), 0), otherGrid.cLines.length);
-        int row = Math.min(Math.max((int) ((dsgObject.getCenterY() - mainGrid.yOffset) / cellSize), 0), otherGrid.rLines.length);
+        int col = Math.min(Math.max((int) ((dsgItem.getCenterX() - mainGrid.xOffset) / cellSize), 0), otherGrid.cLines.length);
+        int row = Math.min(Math.max((int) ((dsgItem.getCenterY() - mainGrid.yOffset) / cellSize), 0), otherGrid.rLines.length);
 
-//        nearby.addAll(mainGrid.getDSGObjects(col, row));
+//        nearby.addAll(mainGrid.getDSGItems(col, row));
 
         if (mainGrid == gridA) {
             for (int c = col; c < col + 2 && c < otherGrid.cells.length; c++) {
                 for (int r = row; r < row + 2 && r < otherGrid.cells[c].length; r++) {
-                    nearby.addAll(otherGrid.getDSGObjects(c, r));
+                    nearby.addAll(otherGrid.getDSGItems(c, r));
                 }
             }
         } else {
             for (int c = col; c > col - 2 && c >= 0 && c < otherGrid.cells.length; c--) {
                 for (int r = row; r > row - 2 && r >= 0 && r < otherGrid.cells[c].length; r--) {
-                    nearby.addAll(otherGrid.getDSGObjects(c, r));
+                    nearby.addAll(otherGrid.getDSGItems(c, r));
                 }
             }
         }

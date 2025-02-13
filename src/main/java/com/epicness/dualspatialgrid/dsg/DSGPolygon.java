@@ -2,7 +2,7 @@ package com.epicness.dualspatialgrid.dsg;
 
 import com.badlogic.gdx.math.Polygon;
 
-public class DSGPolygon extends DSGObject {
+public class DSGPolygon extends DSGItem {
 
     private final Polygon polygon;
 

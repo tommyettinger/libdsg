@@ -1,16 +1,18 @@
 package com.epicness.dualspatialgrid.dsg;
 
 import com.badlogic.gdx.math.Vector2;
+import com.epicness.dualspatialgrid.utils.BooleanConsumer;
+import com.epicness.dualspatialgrid.utils.FloatFloatBiConsumer;
 import com.epicness.dualspatialgrid.utils.Movable;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public abstract class DSGObject implements Movable {
+public abstract class DSGItem implements Movable {
 
     private boolean gridA;
-    Consumer<Boolean> gridAListener;
-    BiConsumer<Float, Float> translationListener;
+    BooleanConsumer gridAListener;
+    FloatFloatBiConsumer translationListener;
     public int col, row;
     public boolean kinematic;
 
