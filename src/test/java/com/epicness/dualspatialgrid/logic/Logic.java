@@ -40,11 +40,12 @@ public class Logic {
     }
 
     private void spawnBall() {
-        Ball ball = new Ball(circle, sizing.getBallSize(), SALMON);
-        ball.getDSGItem().setX(MathUtils.random(sizing.getOffsetX() + sizing.getBallSize(),
-                sizing.getOffsetX() + sizing.getEffectiveWidth() - sizing.getBallSize()));
-        ball.getDSGItem().setY(MathUtils.random(sizing.getOffsetY() + sizing.getBallSize(),
-                sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallSize()));
+        float ballSize = sizing.getCellSize() * 0.5f;
+        Ball ball = new Ball(circle, ballSize, SALMON);
+        ball.getDSGItem().setX(MathUtils.random(sizing.getOffsetX() + ballSize,
+                sizing.getOffsetX() + sizing.getEffectiveWidth() - ballSize));
+        ball.getDSGItem().setY(MathUtils.random(sizing.getOffsetY() + ballSize,
+                sizing.getOffsetY() + sizing.getEffectiveHeight() - ballSize));
         balls.add(ball);
     }
 
@@ -56,11 +57,12 @@ public class Logic {
     }
 
     private void spawnPolyBall() {
-        PolyBall ball = new PolyBall(circle, sizing.BALL_SIZE, SALMON);
-        ball.getDSGItem().setX(MathUtils.random(sizing.getOffsetX() + sizing.getBallSize(),
-                sizing.getOffsetX() + sizing.getEffectiveWidth() - sizing.getBallSize()));
-        ball.getDSGItem().setY(MathUtils.random(sizing.getOffsetY() + sizing.getBallSize(),
-                sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallSize()));
+        float ballSize = sizing.getCellSize() * 0.5f;
+        PolyBall ball = new PolyBall(circle, ballSize, SALMON);
+        ball.getDSGItem().setX(MathUtils.random(sizing.getOffsetX() + ballSize,
+                sizing.getOffsetX() + sizing.getEffectiveWidth() - ballSize));
+        ball.getDSGItem().setY(MathUtils.random(sizing.getOffsetY() + ballSize,
+                sizing.getOffsetY() + sizing.getEffectiveHeight() - ballSize));
         polyBalls.add(ball);
     }
 

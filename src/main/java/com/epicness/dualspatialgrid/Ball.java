@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.epicness.dualspatialgrid.dsg.DSGCircle;
 import com.epicness.dualspatialgrid.dsg.HasDSGItem;
 
+/**
+ * An example class, though still usable in real code, handling a circular DSGItem and its appearance.
+ */
 public class Ball implements HasDSGItem {
 
     public final Sprite sprite;

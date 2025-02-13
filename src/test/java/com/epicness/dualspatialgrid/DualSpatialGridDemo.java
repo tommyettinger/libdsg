@@ -45,8 +45,6 @@ public class DualSpatialGridDemo extends Game {
     public void render() {
         logic.update(Gdx.graphics.getDeltaTime());
         profiler.update(Gdx.graphics.getDeltaTime());
-        profiler.setBallCount(balls.size);
-        profiler.setPolyBallCount(polyBalls.size);
         ScreenUtils.clear(TAN);
         spriteBatch.begin();
         dualSpatialGrid.draw(spriteBatch);

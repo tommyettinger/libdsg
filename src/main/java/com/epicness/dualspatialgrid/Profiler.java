@@ -10,11 +10,14 @@ import com.badlogic.gdx.graphics.profiling.GLProfiler;
 public class Profiler {
 
     private final GLProfiler profiler;
-    private final ProfilerInfo profilerInfo;
+    public final ProfilerInfo profilerInfo;
 
     public Profiler() {
+        this(new BitmapFont());
+    }
+
+    public Profiler(BitmapFont font) {
         profiler = new GLProfiler(Gdx.graphics);
-        BitmapFont font = new BitmapFont();
         profilerInfo = new ProfilerInfo(font);
     }
 
@@ -43,19 +46,11 @@ public class Profiler {
         return this;
     }
 
-    public void setBallCount(int count) {
-        profilerInfo.balls = count;
-    }
-    public void setPolyBallCount(int count) {
-        profilerInfo.polyBalls = count;
-    }
-
     public static class ProfilerInfo {
 
-        transient final BitmapFont font;
+        public transient BitmapFont font;
         public float x, y;
         public int drawCalls, bindings;
-        public int balls, polyBalls;
 
         public ProfilerInfo(BitmapFont font) {
             this.font = font;
@@ -67,9 +62,7 @@ public class Profiler {
             font.draw(spriteBatch,
                 "FPS: " + Gdx.graphics.getFramesPerSecond() + "\n" +
                     "Draw calls: " + (drawCalls < 0 ? "???\n" : drawCalls + "\n")  +
-                    "Texture bindings: " + (bindings < 0 ? "???\n" : bindings + "\n")  +
-                    "Balls: " + balls + "\n" +
-                    "PolyBalls: " + polyBalls,
+                    "Texture bindings: " + (bindings < 0 ? "???" : bindings),
                 x, y);
         }
     }

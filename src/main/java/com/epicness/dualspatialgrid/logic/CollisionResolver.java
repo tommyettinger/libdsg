@@ -144,10 +144,11 @@ public class CollisionResolver {
     }
 
     private void keepInBounds(DSGItem dsgItem) {
-        float x = MathUtils.clamp(dsgItem.getCenterX(), sizing.getOffsetX() + sizing.getBallRadius(),
-                sizing.getOffsetX() + sizing.getEffectiveWidth()  - sizing.getBallRadius());
-        float y = MathUtils.clamp(dsgItem.getCenterY(), sizing.getOffsetY() + sizing.getBallRadius(),
-                sizing.getOffsetY() + sizing.getEffectiveHeight() - sizing.getBallRadius());
+        float ballRadius = sizing.getCellSize() * 0.25f;
+        float x = MathUtils.clamp(dsgItem.getCenterX(), sizing.getOffsetX() + ballRadius,
+                sizing.getOffsetX() + sizing.getEffectiveWidth() - ballRadius);
+        float y = MathUtils.clamp(dsgItem.getCenterY(), sizing.getOffsetY() + ballRadius,
+                sizing.getOffsetY() + sizing.getEffectiveHeight() - ballRadius);
         dsgItem.setPositionCentered(x, y);
     }
 

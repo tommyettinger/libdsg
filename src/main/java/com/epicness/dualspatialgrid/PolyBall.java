@@ -8,7 +8,8 @@ import com.epicness.dualspatialgrid.dsg.DSGPolygon;
 import com.epicness.dualspatialgrid.dsg.HasDSGItem;
 
 /**
- * Balls with polygonal bounds, noticeable less efficient than circle bounds
+ * An example class, though still usable in real code, handling an almost-circular DSGItem and its appearance.
+ * This imitates a circle with polygonal bounds, and is noticeable less efficient than circle bounds.
  */
 public class PolyBall implements HasDSGItem {
 
