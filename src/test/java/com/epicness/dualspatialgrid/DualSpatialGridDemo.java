@@ -19,7 +19,6 @@ public class DualSpatialGridDemo extends Game {
     public DualSpatialGrid dualSpatialGrid;
     // Our shapes
     public Array<Ball> balls;
-    public Array<PolyBall> polyBalls;
 
     private SpriteBatch spriteBatch;
 
@@ -33,7 +32,6 @@ public class DualSpatialGridDemo extends Game {
 
         dualSpatialGrid = new DualSpatialGrid(new Sizing(), pixel);
         balls = new Array<>();
-        polyBalls = new Array<>();
         spriteBatch = new SpriteBatch();
 
         logic = new Logic(this);
@@ -49,7 +47,6 @@ public class DualSpatialGridDemo extends Game {
         spriteBatch.begin();
         dualSpatialGrid.draw(spriteBatch);
         renderBalls();
-        renderPolyBalls();
         profiler.render(spriteBatch);
         spriteBatch.end();
     }
@@ -57,12 +54,6 @@ public class DualSpatialGridDemo extends Game {
     private void renderBalls() {
         for (int i = 0; i < balls.size; i++) {
             balls.get(i).draw(spriteBatch);
-        }
-    }
-
-    private void renderPolyBalls() {
-        for (int i = 0; i < polyBalls.size; i++) {
-            polyBalls.get(i).draw(spriteBatch);
         }
     }
 }

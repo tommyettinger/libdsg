@@ -3,18 +3,15 @@ package com.epicness.dualspatialgrid.logic;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.epicness.dualspatialgrid.Ball;
-import com.epicness.dualspatialgrid.PolyBall;
 import com.epicness.dualspatialgrid.dsg.DSGItem;
 
 public class BallMover {
 
     private final Array<Ball> balls;
-    private final Array<PolyBall> polyBalls;
     public final Vector2 target, dir;
 
-    public BallMover(Array<Ball> balls, Array<PolyBall> polyBalls) {
+    public BallMover(Array<Ball> balls) {
         this.balls = balls;
-        this.polyBalls = polyBalls;
         target = new Vector2();
         dir = new Vector2();
     }
@@ -22,9 +19,6 @@ public class BallMover {
     public void moveBalls(float delta) {
         for (int i = 0; i < balls.size; i++) {
             moveBall(balls.get(i).getDSGItem(), delta);
-        }
-        for (int i = 0; i < polyBalls.size; i++) {
-            moveBall(polyBalls.get(i).getDSGItem(), delta);
         }
     }
 
