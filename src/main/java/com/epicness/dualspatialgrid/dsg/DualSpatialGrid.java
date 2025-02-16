@@ -57,21 +57,20 @@ public class DualSpatialGrid {
     public OrderedSet<DSGItem> getNearby(DSGItem dsgObject) {
         nearby.clear();
         SpatialGrid mainGrid = dsgObject.isGridA() ? gridA : gridB;
-        SpatialGrid otherGrid = (mainGrid == gridA) ? gridB : gridA;
 
         int col = (int) ((dsgObject.getCenterX() - mainGrid.offsetX) / cellSize);
         int row = (int) ((dsgObject.getCenterY() - mainGrid.offsetY) / cellSize);
 
         if (mainGrid == gridA) {
-            for (int c = col; c < col + 2; c++) {
-                for (int r = row; r < row + 2; r++) {
-                    nearby.addAll(otherGrid.getDSGItems(c, r));
+            for (int c = col + 1; c >= col; c--) {
+                for (int r = row + 1; r >= row; r--) {
+                    nearby.addAll(gridB.getDSGItems(c, r));
                 }
             }
         } else {
-            for (int c = col; c > col - 2; c--) {
-                for (int r = row; r > row - 2; r--) {
-                    nearby.addAll(otherGrid.getDSGItems(c, r));
+            for (int c = col - 1; c <= col; c++) {
+                for (int r = row - 1; r <= row; r++) {
+                    nearby.addAll(gridA.getDSGItems(c, r));
                 }
             }
         }
