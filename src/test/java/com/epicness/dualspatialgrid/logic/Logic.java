@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.epicness.dualspatialgrid.Ball;
-import com.epicness.dualspatialgrid.DualSpatialGridDemo;
+import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.Sizing;
 
 import static com.badlogic.gdx.graphics.Color.SALMON;
@@ -21,12 +21,12 @@ public class Logic {
     private final Sizing sizing;
 
 
-    public Logic(DualSpatialGridDemo demo) {
-        ballMover = new BallMover(demo.balls);
-        sizing = demo.dualSpatialGrid.sizing;
-        collisionResolver = new CollisionResolver(demo.dualSpatialGrid, demo.balls);
-        circle = demo.circle;
-        balls = demo.balls;
+    public Logic(Array<Ball> balls, DualSpatialGrid dsg, Sprite circle) {
+        ballMover = new BallMover(balls);
+        sizing = dsg.sizing;
+        collisionResolver = new CollisionResolver(dsg, balls);
+        this.circle = circle;
+        this.balls = balls;
     }
 
     public void spawnBalls() {

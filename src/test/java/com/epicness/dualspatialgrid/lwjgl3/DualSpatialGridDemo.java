@@ -1,4 +1,4 @@
-package com.epicness.dualspatialgrid;
+package com.epicness.dualspatialgrid.lwjgl3;
 
 import static com.badlogic.gdx.Input.Keys.L;
 import static com.badlogic.gdx.graphics.Color.TAN;
@@ -6,11 +6,16 @@ import static com.epicness.dualspatialgrid.Constants.*;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.epicness.dualspatialgrid.Ball;
+import com.epicness.dualspatialgrid.Constants;
+import com.epicness.dualspatialgrid.Input;
 import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.logic.Logic;
 
@@ -35,7 +40,7 @@ public class DualSpatialGridDemo extends Game {
         balls = new Array<>();
         spriteBatch = new SpriteBatch();
 
-        logic = new Logic(this);
+        logic = new Logic(balls, dualSpatialGrid, circle);
         //profiler = new Profiler();
         new Input(logic);
     }
@@ -61,4 +66,16 @@ public class DualSpatialGridDemo extends Game {
             balls.get(i).draw(spriteBatch);
         }
     }
+
+    public static void main(String[] args) {
+        if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
+        Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
+        configuration.setTitle("Dual Spatial Grid");
+        configuration.useVsync(true);
+        configuration.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate + 1);
+        configuration.setWindowedMode(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+        configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+        new Lwjgl3Application(new DualSpatialGridDemo(), configuration);
+    }
+
 }
