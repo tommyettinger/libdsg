@@ -3,7 +3,6 @@ package com.epicness.dualspatialgrid.logic;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Ball;
-import com.epicness.dualspatialgrid.Sizing;
 import com.epicness.dualspatialgrid.dsg.DSGCircle;
 import com.epicness.dualspatialgrid.dsg.DSGItem;
 import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
@@ -11,13 +10,11 @@ import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 public class CollisionResolver {
 
     private final DualSpatialGrid dualSpatialGrid;
-    private final Sizing sizing;
     private final Array<Ball> balls;
     public int maxIterations = 1;
 
     public CollisionResolver(DualSpatialGrid dualSpatialGrid, Array<Ball> balls) {
         this.dualSpatialGrid = dualSpatialGrid;
-        this.sizing = dualSpatialGrid.sizing;
         this.balls = balls;
     }
 

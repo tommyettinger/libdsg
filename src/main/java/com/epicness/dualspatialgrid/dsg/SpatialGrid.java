@@ -26,12 +26,13 @@ public class SpatialGrid {
     }
 
     private OrderedSet<DSGItem> getSet(int col, int row) {
-        GridPoint2 key = new GridPoint2(col, row);
-        OrderedSet<DSGItem> existing = gridMap.get(key);
-        if(existing == null){
-            gridMap.put(key, existing = new OrderedSet<>(8, 0.5f));
-        }
-        return existing;
+//        GridPoint2 key = new GridPoint2(col, row);
+//        OrderedSet<DSGItem> existing = gridMap.get(key);
+//        if(existing == null){
+//            gridMap.put(key, existing = new OrderedSet<>(8, 0.5f));
+//        }
+//        return existing;
+        return gridMap.computeIfAbsent(new GridPoint2(col, row), k -> new OrderedSet<>(8, 0.5f));
     }
 
     public void clear() {
