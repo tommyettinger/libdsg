@@ -24,9 +24,6 @@ public class Input extends InputAdapter {
             case Q:
                 logic.spawnBalls();
                 break;
-            case W:
-                logic.spawnPolyBalls();
-                break;
             case E:
                 logic.collisionResolver.toggleIterations();
                 break;

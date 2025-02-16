@@ -1,92 +1,51 @@
 package com.epicness.dualspatialgrid.dsg;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Sizing;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpatialGrid {
 
-    public final Sprite[][] cells;
-    public final float cellSize, xOffset, yOffset;
-    public final Sprite[] cLines, rLines;
-    private final OrderedSet<DSGItem>[][] grid;
+    public final float cellSize, offsetX, offsetY;
+    private final Map<GridPoint2, OrderedSet<DSGItem>> gridMap;
     public final Sizing sizing;
+    private final GridPoint2 gridPoint2;
+    private static final OrderedSet<DSGItem> EMPTY_SET = new OrderedSet<>();
 
-    @SuppressWarnings("unchecked")
-    public SpatialGrid(Sizing sizing,
-                       Sprite pixelSprite, Color color, Color lineColor) {
+    public SpatialGrid(Sizing sizing) {
         this.sizing = sizing;
-        cells = new Sprite[sizing.getGridColumns()][sizing.getGridRows()];
-        this.cellSize = sizing.getCellSize();
-        this.xOffset = sizing.getOffsetX();
-        this.yOffset = sizing.getOffsetY();
+        cellSize = sizing.getCellSize();
+        offsetX = sizing.getOffsetX();
+        offsetY = sizing.getOffsetY();
 
-        cLines = new Sprite[sizing.getGridColumns() - 1];
-        rLines = new Sprite[sizing.getGridRows() - 1];
-        grid = new OrderedSet[sizing.getGridColumns()][sizing.getGridRows()];
-
-        for (int c = 0; c < cells.length; c++) {
-
-            for (int r = 0; r < cells[c].length; r++) {
-                cells[c][r] = new Sprite(pixelSprite);
-                cells[c][r].setSize(cellSize, cellSize);
-                cells[c][r].setPosition(c * cellSize + xOffset, r * cellSize + yOffset);
-                cells[c][r].setColor(color);
-
-                grid[c][r] = new OrderedSet<>();
-            }
-        }
-
-        for (int c = 0; c < cLines.length; ) {
-            cLines[c] = new Sprite(pixelSprite);
-            cLines[c].setColor(lineColor);
-            cLines[c].setSize(2f, sizing.getGridRows() * cellSize);
-            cLines[c].setPosition(cellSize * ++c + xOffset, yOffset);
-        }
-
-        for (int r = 0; r < rLines.length; ) {
-            rLines[r] = new Sprite(pixelSprite);
-            rLines[r].setColor(lineColor);
-            rLines[r].setSize(sizing.getGridColumns() * cellSize, 2f);
-            rLines[r].setPosition(xOffset, cellSize * ++r + yOffset);
-        }
+        gridMap = new HashMap<>();
+        gridPoint2 = new GridPoint2();
     }
 
-    public void draw(SpriteBatch spriteBatch) {
-        for (int c = 0; c < cells.length; c++) {
-            for (int r = 0; r < cells[c].length; r++) {
-                cells[c][r].draw(spriteBatch);
-            }
+    private OrderedSet<DSGItem> getSet(int col, int row) {
+        GridPoint2 key = new GridPoint2(col, row);
+        OrderedSet<DSGItem> existing = gridMap.get(key);
+        if(existing == null){
+            gridMap.put(key, existing = new OrderedSet<>(8, 0.5f));
         }
-
-        for (int c = 0; c < cLines.length; c++) {
-            cLines[c].draw(spriteBatch);
-        }
-
-        for (int r = 0; r < rLines.length; r++) {
-            rLines[r].draw(spriteBatch);
-        }
+        return existing;
     }
 
     public void clear() {
-        for (int c = 0; c < grid.length; c++) {
-            for (int r = 0; r < grid[c].length; r++) {
-                grid[c][r].clear();
-            }
-        }
+        gridMap.clear();
     }
 
     public void insert(DSGItem dsgItem) {
-        int col = (int) ((dsgItem.getCenterX() - xOffset) / cellSize);
-        int row = (int) ((dsgItem.getCenterY() - yOffset) / cellSize);
+        int col = (int) ((dsgItem.getCenterX() - offsetX) / cellSize);
+        int row = (int) ((dsgItem.getCenterY() - offsetY) / cellSize);
 
-        if(col >= 0 && col < grid.length && row >= 0 && row < grid[col].length)
-            grid[col][row].add(dsgItem);
+        getSet(col, row).add(dsgItem);
     }
 
     public OrderedSet<DSGItem> getDSGItems(int col, int row) {
-        return grid[col][row];
+        return gridMap.getOrDefault(gridPoint2.set(col, row), EMPTY_SET);
     }
 }

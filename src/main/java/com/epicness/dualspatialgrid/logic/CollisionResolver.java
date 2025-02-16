@@ -1,6 +1,5 @@
 package com.epicness.dualspatialgrid.logic;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Ball;
@@ -40,16 +39,10 @@ public class CollisionResolver {
             collisionsExist = false;
             for (int j = 0; j < dsgItemSet.size; j++) {
                 DSGItem a = dsgItemArray.get(j);
-                if (j == dsgItemSet.size - 1) {
-                    keepInBounds(a);
-                }
                 for (int k = j + 1; k < dsgItemArray.size; k++) {
                     DSGItem b = dsgItemArray.get(k);
 
                     collisionsExist |= resolveCirclesCollision((DSGCircle) a, (DSGCircle) b);
-
-                    keepInBounds(a);
-                    keepInBounds(b);
                 }
             }
 
@@ -79,15 +72,6 @@ public class CollisionResolver {
             return true;
         }
         return false;
-    }
-
-    private void keepInBounds(DSGItem dsgItem) {
-        float ballRadius = sizing.getCellSize() * 0.25f;
-        float x = MathUtils.clamp(dsgItem.getCenterX(), sizing.getOffsetX() + ballRadius,
-                sizing.getOffsetX() + sizing.getEffectiveWidth() - ballRadius);
-        float y = MathUtils.clamp(dsgItem.getCenterY(), sizing.getOffsetY() + ballRadius,
-                sizing.getOffsetY() + sizing.getEffectiveHeight() - ballRadius);
-        dsgItem.setPositionCentered(x, y);
     }
 
     public void toggleIterations() {

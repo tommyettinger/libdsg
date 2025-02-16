@@ -12,7 +12,7 @@ public class Sizing {
         this(1600, 920, 40, 40, 40);
     }
     
-    public Sizing(int windowWidth, int windowHeight, int xOffset, int yOffset, int cellSize) {
+    public Sizing(int windowWidth, int windowHeight, float xOffset, float yOffset, float cellSize) {
         this.WINDOW_WIDTH = windowWidth;
         this.WINDOW_HEIGHT = windowHeight;
 
@@ -24,9 +24,9 @@ public class Sizing {
 
     public int WINDOW_WIDTH;
     public int WINDOW_HEIGHT;
-    public int CELL_SIZE;
-    public int GRID_X;
-    public int GRID_Y;
+    public float CELL_SIZE;
+    public float GRID_X;
+    public float GRID_Y;
 
     public int getWindowWidth() {
         return WINDOW_WIDTH < 0 && Gdx.graphics != null ? Gdx.graphics.getBackBufferWidth() : WINDOW_WIDTH;
@@ -35,32 +35,24 @@ public class Sizing {
         return WINDOW_HEIGHT < 0 && Gdx.graphics != null ? Gdx.graphics.getBackBufferHeight() : WINDOW_HEIGHT;
     }
 
-    public int getCellSize() {
+    public float getCellSize() {
         return CELL_SIZE;
     }
 
-    public int getOffsetX() {
+    public float getOffsetX() {
         return GRID_X;
     }
 
-    public int getOffsetY() {
+    public float getOffsetY() {
         return GRID_Y;
     }
 
-    public int getEffectiveWidth() {
+    public float getEffectiveWidth() {
         return getWindowWidth() - getOffsetX() * 2;
     }
 
-    public int getEffectiveHeight() {
+    public float getEffectiveHeight() {
         return getWindowHeight() - getOffsetY() * 2;
-    }
-
-    public int getGridColumns() {
-        return getEffectiveWidth() / getCellSize();
-    }
-
-    public int getGridRows() {
-        return getEffectiveHeight() / getCellSize();
     }
 
     public Sizing expandedCopy() {

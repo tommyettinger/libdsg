@@ -8,6 +8,7 @@ import com.epicness.dualspatialgrid.DualSpatialGridDemo;
 import com.epicness.dualspatialgrid.Sizing;
 
 import static com.badlogic.gdx.graphics.Color.SALMON;
+import static com.epicness.dualspatialgrid.Constants.BALL_SIZE;
 
 public class Logic {
 
@@ -17,32 +18,28 @@ public class Logic {
     private final Sprite circle;
 
     private final Array<Ball> balls;
-
     private final Sizing sizing;
 
 
     public Logic(DualSpatialGridDemo demo) {
-        sizing = demo.dualSpatialGrid.sizing;
         ballMover = new BallMover(demo.balls);
+        sizing = demo.dualSpatialGrid.sizing;
         collisionResolver = new CollisionResolver(demo.dualSpatialGrid, demo.balls);
         circle = demo.circle;
         balls = demo.balls;
     }
 
     public void spawnBalls() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             spawnBall();
         }
         System.out.println("#Balls: " + balls.size);
     }
 
     private void spawnBall() {
-        float ballSize = sizing.getCellSize() * 0.5f;
-        Ball ball = new Ball(circle, ballSize, SALMON);
-        ball.getDSGItem().setX(MathUtils.random(sizing.getOffsetX() + ballSize,
-                sizing.getOffsetX() + sizing.getEffectiveWidth() - ballSize));
-        ball.getDSGItem().setY(MathUtils.random(sizing.getOffsetY() + ballSize,
-                sizing.getOffsetY() + sizing.getEffectiveHeight() - ballSize));
+        Ball ball = new Ball(circle, BALL_SIZE, SALMON);
+        ball.getDSGItem().setX(MathUtils.random(sizing.getOffsetX() + BALL_SIZE, sizing.getOffsetX() + sizing.getEffectiveWidth() - BALL_SIZE));
+        ball.getDSGItem().setY(MathUtils.random(sizing.getOffsetY() + BALL_SIZE, sizing.getOffsetY() + sizing.getEffectiveHeight() - BALL_SIZE));
         balls.add(ball);
     }
 
