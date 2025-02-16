@@ -34,4 +34,8 @@ public abstract class DSGItem implements Movable {
     public abstract float getCenterY();
 
     public abstract void setPositionCentered(float x, float y);
+
+    public void setPositionCentered(Vector2 v) {
+        setPositionCentered(v.x, v.y);
+    }
 }
