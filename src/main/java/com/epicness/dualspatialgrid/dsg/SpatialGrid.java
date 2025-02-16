@@ -21,7 +21,7 @@ public class SpatialGrid {
         offsetX = sizing.getOffsetX();
         offsetY = sizing.getOffsetY();
 
-        gridMap = new HashMap<>();
+        gridMap = new HashMap<>(1024, 0.5f);
         gridPoint2 = new GridPoint2();
     }
 

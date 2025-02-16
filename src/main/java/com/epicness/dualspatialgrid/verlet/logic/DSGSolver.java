@@ -20,18 +20,18 @@ public class DSGSolver {
         collisionAxis = new Vector2();
     }
 
-    public <T extends HasDSGItem> void prepare(List<T> circles) {
+    public <T extends HasDSGItem> void prepare(List<T> containers) {
         dualSpatialGrid.clear();
-        for (int i = 0; i < circles.size(); i++) {
-            dualSpatialGrid.insert(circles.get(i).getDSGItem());
+        for (int i = 0; i < containers.size(); i++) {
+            dualSpatialGrid.insert(containers.get(i).getDSGItem());
         }
     }
 
-    public void solveCollisions(HasDSGItem circle) {
-        OrderedSet<DSGItem> dSGItemSet = dualSpatialGrid.getNearby(circle.getDSGItem());
+    public void solveCollisions(HasDSGItem container) {
+        OrderedSet<DSGItem> dSGItemSet = dualSpatialGrid.getNearby(container.getDSGItem());
         Array<DSGItem> dSGItemArray = dSGItemSet.orderedItems();
         for (int i = 0; i < dSGItemArray.size; i++) {
-            resolveCirclesCollision((DSGCircle) circle.getDSGItem(), (DSGCircle) dSGItemArray.get(i));
+            resolveCirclesCollision((DSGCircle) container.getDSGItem(), (DSGCircle) dSGItemArray.get(i));
         }
     }
 

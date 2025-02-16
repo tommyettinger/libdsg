@@ -1,6 +1,7 @@
 package com.epicness.dualspatialgrid.dsg;
 
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.utils.NumberUtils;
 
 public class DSGCircle extends DSGItem {
 
@@ -54,5 +55,21 @@ public class DSGCircle extends DSGItem {
 
     public Circle getCircle() {
         return circle;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof DSGCircle)) return false;
+
+        DSGCircle dsgCircle = (DSGCircle) o;
+        return circle.equals(dsgCircle.circle);
+    }
+
+    @Override
+    public int hashCode() {
+        int r = NumberUtils.floatToRawIntBits(circle.radius);
+        int x = NumberUtils.floatToRawIntBits(circle.x);
+        int y = NumberUtils.floatToRawIntBits(circle.y);
+        return r ^ (x << 10 | x >>> 22) ^ (y << 21 | y >>> 11);
     }
 }

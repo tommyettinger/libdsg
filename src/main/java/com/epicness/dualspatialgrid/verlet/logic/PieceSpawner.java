@@ -1,7 +1,6 @@
 package com.epicness.dualspatialgrid.verlet.logic;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.epicness.dualspatialgrid.utils.FloatFloatToObjBiFunction;
 import com.epicness.dualspatialgrid.verlet.HasVerletCircleAndDSG;
 
@@ -17,7 +16,7 @@ public class PieceSpawner {
         this.pieces = pieces;
         this.acquire = getPiece;
     }
-//MathUtils.random(3f, 8f)
+
     public void spawnPieces(float x, float y) {
         for (int i = 0; i < 100; i++) {
             spawnPiece(

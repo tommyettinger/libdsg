@@ -2,11 +2,9 @@ package com.epicness.dualspatialgrid.verlet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.math.Vector2;
 import com.epicness.dualspatialgrid.verlet.logic.Logic;
 
 import static com.badlogic.gdx.Input.Buttons.LEFT;
-import static com.badlogic.gdx.Input.Keys.D;
 import static com.badlogic.gdx.Input.Keys.L;
 
 public class Input extends InputAdapter {

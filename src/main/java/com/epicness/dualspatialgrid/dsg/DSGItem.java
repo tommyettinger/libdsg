@@ -5,9 +5,6 @@ import com.epicness.dualspatialgrid.utils.BooleanConsumer;
 import com.epicness.dualspatialgrid.utils.FloatFloatBiConsumer;
 import com.epicness.dualspatialgrid.utils.Movable;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 public abstract class DSGItem implements Movable {
 
     private boolean gridA;
