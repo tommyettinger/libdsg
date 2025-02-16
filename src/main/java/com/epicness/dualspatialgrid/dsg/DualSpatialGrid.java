@@ -8,7 +8,7 @@ public class DualSpatialGrid {
     private final SpatialGrid gridA, gridB;
     public final Sizing sizing;
     private final float cellSize, halfCellSize;
-    private final OrderedSet<DSGItem> nearby;
+    private final OrderedSet<HasDSGItem> nearby;
 
     public DualSpatialGrid(Sizing sizing) {
         this.sizing = sizing;
@@ -24,7 +24,8 @@ public class DualSpatialGrid {
         gridB.clear();
     }
 
-    public void insert(DSGItem dsgItem) {
+    public void insert(HasDSGItem containing) {
+        DSGItem dsgItem = containing.getDSGItem();
         float xA = dsgItem.getCenterX();
         float yA = dsgItem.getCenterY();
         float xB = xA - gridB.offsetX;
@@ -50,17 +51,18 @@ public class DualSpatialGrid {
             dsgItem.row = rowB;
             dsgItem.setGridA(false);
         }
-        gridA.insert(dsgItem);
-        gridB.insert(dsgItem);
+        gridA.insert(containing);
+        gridB.insert(containing);
     }
 
-    public OrderedSet<DSGItem> getNearby(DSGItem dsgObject) {
+    public OrderedSet<HasDSGItem> getNearby(HasDSGItem containing) {
+        DSGItem dsgItem = containing.getDSGItem();
         nearby.clear();
-        SpatialGrid mainGrid = dsgObject.isGridA() ? gridA : gridB;
+        SpatialGrid mainGrid = dsgItem.isGridA() ? gridA : gridB;
         SpatialGrid otherGrid = (mainGrid == gridA) ? gridB : gridA;
 
-        int col = (int) ((dsgObject.getCenterX() - mainGrid.offsetX) / cellSize);
-        int row = (int) ((dsgObject.getCenterY() - mainGrid.offsetY) / cellSize);
+        int col = (int) ((dsgItem.getCenterX() - mainGrid.offsetX) / cellSize);
+        int row = (int) ((dsgItem.getCenterY() - mainGrid.offsetY) / cellSize);
 
         if (mainGrid == gridA) {
             for (int c = col; c < col + 2; c++) {

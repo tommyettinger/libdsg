@@ -6,6 +6,7 @@ import com.epicness.dualspatialgrid.Ball;
 import com.epicness.dualspatialgrid.dsg.DSGCircle;
 import com.epicness.dualspatialgrid.dsg.DSGItem;
 import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
+import com.epicness.dualspatialgrid.dsg.HasDSGItem;
 
 public class CollisionResolver {
 
@@ -21,23 +22,23 @@ public class CollisionResolver {
     public void resolveAllCollisions() {
         dualSpatialGrid.clear();
         for (int i = 0; i < balls.size; i++) {
-            dualSpatialGrid.insert(balls.get(i).getDSGItem());
+            dualSpatialGrid.insert(balls.get(i));
         }
         for (int i = 0; i < balls.size; i++) {
-            resolveAllCollisions(dualSpatialGrid.getNearby(balls.get(i).getDSGItem()));
+            resolveAllCollisions(dualSpatialGrid.getNearby(balls.get(i)));
         }
     }
 
-    private void resolveAllCollisions(OrderedSet<DSGItem> dsgItemSet) {
-        Array<DSGItem> dsgItemArray = dsgItemSet.orderedItems();
+    private void resolveAllCollisions(OrderedSet<HasDSGItem> dsgItemSet) {
+        Array<HasDSGItem> dsgItemArray = dsgItemSet.orderedItems();
         boolean collisionsExist;
 
         for (int i = 0; i < maxIterations; i++) {
             collisionsExist = false;
             for (int j = 0; j < dsgItemSet.size; j++) {
-                DSGItem a = dsgItemArray.get(j);
+                DSGItem a = dsgItemArray.get(j).getDSGItem();
                 for (int k = j + 1; k < dsgItemArray.size; k++) {
-                    DSGItem b = dsgItemArray.get(k);
+                    DSGItem b = dsgItemArray.get(k).getDSGItem();
 
                     collisionsExist |= resolveCirclesCollision((DSGCircle) a, (DSGCircle) b);
                 }

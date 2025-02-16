@@ -10,10 +10,10 @@ import java.util.Map;
 public class SpatialGrid {
 
     public final float cellSize, offsetX, offsetY;
-    private final Map<GridPoint2, OrderedSet<DSGItem>> gridMap;
+    private final Map<GridPoint2, OrderedSet<HasDSGItem>> gridMap;
     public final Sizing sizing;
     private final GridPoint2 gridPoint2;
-    private static final OrderedSet<DSGItem> EMPTY_SET = new OrderedSet<>();
+    private static final OrderedSet<HasDSGItem> EMPTY_SET = new OrderedSet<>();
 
     public SpatialGrid(Sizing sizing) {
         this.sizing = sizing;
@@ -25,7 +25,7 @@ public class SpatialGrid {
         gridPoint2 = new GridPoint2();
     }
 
-    private OrderedSet<DSGItem> getSet(int col, int row) {
+    private OrderedSet<HasDSGItem> getSet(int col, int row) {
 //        GridPoint2 key = new GridPoint2(col, row);
 //        OrderedSet<DSGItem> existing = gridMap.get(key);
 //        if(existing == null){
@@ -39,14 +39,15 @@ public class SpatialGrid {
         gridMap.clear();
     }
 
-    public void insert(DSGItem dsgItem) {
+    public void insert(HasDSGItem containing) {
+        DSGItem dsgItem = containing.getDSGItem();
         int col = (int) ((dsgItem.getCenterX() - offsetX) / cellSize);
         int row = (int) ((dsgItem.getCenterY() - offsetY) / cellSize);
 
-        getSet(col, row).add(dsgItem);
+        getSet(col, row).add(containing);
     }
 
-    public OrderedSet<DSGItem> getDSGItems(int col, int row) {
+    public OrderedSet<HasDSGItem> getDSGItems(int col, int row) {
         return gridMap.getOrDefault(gridPoint2.set(col, row), EMPTY_SET);
     }
 }
