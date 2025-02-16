@@ -41,6 +41,10 @@ public class VerletIntegrator {
         velocity.set(currentPos).sub(oldPos);
         // Save current position
         oldPos.set(currentPos);
+        // clamp velocity (?)
+        float iDelta = (1f/32f) / delta;
+        velocity.set(Math.min(Math.max(velocity.x, -iDelta), iDelta),
+                Math.min(Math.max(velocity.y, -iDelta), iDelta));
         // Perform Verlet integration
         currentPos.add(velocity).add(acceleration.scl(delta * delta));
         // Reset acceleration

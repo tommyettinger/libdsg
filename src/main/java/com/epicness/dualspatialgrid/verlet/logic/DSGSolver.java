@@ -35,6 +35,12 @@ public class DSGSolver {
         }
     }
 
+    public <T extends HasDSGItem> void solveCollisions(List<T> containers) {
+        for (int i = 0; i < containers.size(); i++) {
+            solveCollisions(containers.get(i));
+        }
+    }
+
     private void resolveCirclesCollision(DSGCircle a, DSGCircle b) {
         collisionAxis.set(a.getCenter()).sub(b.getCenter());
         float dist = collisionAxis.len();

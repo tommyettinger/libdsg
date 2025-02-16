@@ -27,12 +27,11 @@ public class Solver {
 
     private void solveDSG(float delta) {
         dsgSolver.prepare(pieces);
+        dsgSolver.solveCollisions(pieces);
         for (int i = 0; i < pieces.size(); i++) {
             piece = pieces.get(i);
-            verletIntegrator.integrate(piece.getVerletCircle(), delta);
-            syncDSG(piece);
-            dsgSolver.solveCollisions(piece);
             syncVerlet(piece);
+            verletIntegrator.integrate(piece.getVerletCircle(), delta);
             verletIntegrator.applyCircleConstraint();
             syncDSG(piece);
         }

@@ -47,6 +47,6 @@ public class VerletDemo extends Game {
         configuration.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate + 1);
         configuration.setWindowedMode(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
-        new Lwjgl3Application(new DualSpatialGridDemo(), configuration);
+        new Lwjgl3Application(new VerletDemo(), configuration);
     }
 }
