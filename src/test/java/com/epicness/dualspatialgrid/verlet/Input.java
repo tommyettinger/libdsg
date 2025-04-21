@@ -2,18 +2,16 @@ package com.epicness.dualspatialgrid.verlet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.epicness.dualspatialgrid.verlet.logic.Logic;
 
 import static com.badlogic.gdx.Input.Buttons.LEFT;
 import static com.badlogic.gdx.Input.Keys.F;
-import static com.badlogic.gdx.Input.Keys.L;
 
 public class Input extends InputAdapter {
 
-    private final Logic<?> logic;
+    private final PieceSpawner<?> spawner;
 
-    public Input(Logic<?> logic) {
-        this.logic = logic;
+    public Input(PieceSpawner<?> spawner) {
+        this.spawner = spawner;
         Gdx.input.setInputProcessor(this);
     }
 
@@ -21,9 +19,9 @@ public class Input extends InputAdapter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenY = Gdx.graphics.getHeight() - screenY;
         if (button == LEFT) {
-            logic.pieceSpawner.spawnPiece(screenX, screenY);
+            spawner.spawnPiece(screenX, screenY);
         } else {
-            logic.pieceSpawner.spawnPieces(screenX, screenY);
+            spawner.spawnPieces(screenX, screenY);
         }
         return false;
     }

@@ -1,8 +1,7 @@
-package com.epicness.dualspatialgrid.verlet.logic;
+package com.epicness.dualspatialgrid.verlet;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.epicness.dualspatialgrid.utils.FloatFloatToObjBiFunction;
-import com.epicness.dualspatialgrid.verlet.HasVerletCircleAndDSG;
 
 import java.util.List;
 

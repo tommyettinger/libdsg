@@ -12,6 +12,7 @@ import com.epicness.dualspatialgrid.verlet.Input;
 import com.epicness.dualspatialgrid.verlet.Renderer;
 import com.epicness.dualspatialgrid.verlet.ColorfulBall;
 import com.epicness.dualspatialgrid.verlet.logic.Logic;
+import com.epicness.dualspatialgrid.verlet.PieceSpawner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,9 @@ public class VerletDemo extends Game {
         List<ColorfulBall> colorfulBalls = new ArrayList<>();
         Circle circle = new Circle(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f, WINDOW_HEIGHT * 0.5f);
         DualSpatialGrid dualSpatialGrid = new DualSpatialGrid(SIZING);
-        logic = new Logic<>(dualSpatialGrid, colorfulBalls, (x, y) -> new ColorfulBall(x, y, MathUtils.random(3f, 8f)), circle);
-        new Input(logic);
+        logic = new Logic<>(dualSpatialGrid, colorfulBalls, circle);
+        PieceSpawner<ColorfulBall> spawner = new PieceSpawner<>(colorfulBalls, (x, y) -> new ColorfulBall(x, y, MathUtils.random(3f, 8f)));
+        new Input(spawner);
         renderer = new Renderer<>(colorfulBalls, circle);
     }
 
