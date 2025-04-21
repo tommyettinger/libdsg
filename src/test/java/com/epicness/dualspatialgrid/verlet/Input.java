@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.epicness.dualspatialgrid.verlet.logic.Logic;
 
 import static com.badlogic.gdx.Input.Buttons.LEFT;
+import static com.badlogic.gdx.Input.Keys.F;
 import static com.badlogic.gdx.Input.Keys.L;
 
 public class Input extends InputAdapter {
@@ -29,7 +30,7 @@ public class Input extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode != L) return false;
+        if (keycode != F) return false; // Frames Per Second
         System.out.println(Gdx.graphics.getFramesPerSecond());
         return false;
     }

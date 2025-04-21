@@ -21,12 +21,13 @@ public class Input extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Q:
+            case S: // Spawn
                 logic.spawnBalls();
                 break;
-            case E:
+            case T: // Toggle (iterations)
                 logic.collisionResolver.toggleIterations();
                 break;
+            case Q: // Quit
             case ESCAPE:
                 Gdx.app.exit();
                 break;
