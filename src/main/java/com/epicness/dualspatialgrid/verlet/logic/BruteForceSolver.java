@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BruteForceSolver {
 
-    public <T extends HasVerletCircle> void solveCollisions(List<T> circles, int index) {
+    public static <T extends HasVerletCircle> void solveCollisions(List<T> circles, int index) {
         VerletCircle circle1 = circles.get(index).getVerletCircle();
         for (int i = index + 1; i < circles.size(); i++) {
             VerletCircle circle2 = circles.get(i).getVerletCircle();

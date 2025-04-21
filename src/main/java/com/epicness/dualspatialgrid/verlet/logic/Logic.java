@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Logic<P extends HasVerletCircleAndDSG> {
 
-    public final PieceSpawner pieceSpawner;
-    private final Solver solver;
+    public final PieceSpawner<P> pieceSpawner;
+    private final Solver<P> solver;
 
     private static final float MAX_FRAME_TIME = 1f / 30f;
     private static final float TIME_STEP = 1f / 60f;
@@ -18,8 +18,8 @@ public class Logic<P extends HasVerletCircleAndDSG> {
 
     public Logic(DualSpatialGrid dsg, List<P> pieces, FloatFloatToObjBiFunction<P> getPiece, Circle bounds) {
         VerletIntegrator verletIntegrator = new VerletIntegrator(bounds);
-        pieceSpawner = new PieceSpawner((List<HasVerletCircleAndDSG>) pieces, (FloatFloatToObjBiFunction<HasVerletCircleAndDSG>) getPiece);
-        solver = new Solver(verletIntegrator, new DSGSolver(dsg), new BruteForceSolver(), (List<HasVerletCircleAndDSG>) pieces);
+        pieceSpawner = new PieceSpawner<>(pieces, getPiece);
+        solver = new Solver<>(verletIntegrator, new DSGSolver(dsg), pieces);
     }
 
     public void update(float delta) {

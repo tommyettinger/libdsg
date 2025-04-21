@@ -4,19 +4,17 @@ import com.epicness.dualspatialgrid.verlet.HasVerletCircleAndDSG;
 
 import java.util.List;
 
-public class Solver {
+public class Solver<P extends HasVerletCircleAndDSG> {
 
     private final VerletIntegrator verletIntegrator;
     private final DSGSolver dsgSolver;
-    private final BruteForceSolver bruteForceSolver;
 
-    private final List<HasVerletCircleAndDSG> pieces;
-    private HasVerletCircleAndDSG piece;
+    private final List<P> pieces;
+    private P piece;
 
-    public Solver(VerletIntegrator verletIntegrator, DSGSolver dsgSolver, BruteForceSolver bruteForceSolver, List<HasVerletCircleAndDSG> pieces) {
+    public Solver(VerletIntegrator verletIntegrator, DSGSolver dsgSolver, List<P> pieces) {
         this.verletIntegrator = verletIntegrator;
         this.dsgSolver = dsgSolver;
-        this.bruteForceSolver = bruteForceSolver;
         this.pieces = pieces;
         piece = null;
     }
@@ -41,7 +39,7 @@ public class Solver {
         for (int i = 0; i < pieces.size(); i++) {
             piece = pieces.get(i);
             verletIntegrator.integrate(piece.getVerletCircle(), delta);
-            bruteForceSolver.solveCollisions(pieces, i);
+            BruteForceSolver.solveCollisions(pieces, i);
             verletIntegrator.applyCircleConstraint();
         }
     }
