@@ -12,7 +12,7 @@ public class SpatialGrid {
     public final float cellSize, offsetX, offsetY;
     private final Map<GridPoint2, Array<DSGItem>> gridMap;
     public final Sizing sizing;
-    private final GridPoint2 gridPoint2;
+    private transient final GridPoint2 gridPoint2 = new GridPoint2();
     private static final Array<DSGItem> EMPTY = new Array<>(true, 0, DSGItem.class);
 
     public SpatialGrid(Sizing sizing) {
@@ -22,17 +22,18 @@ public class SpatialGrid {
         offsetY = sizing.getOffsetY();
 
         gridMap = new HashMap<>(1024, 0.5f);
-        gridPoint2 = new GridPoint2();
     }
 
     private Array<DSGItem> getContents(int col, int row) {
-//        GridPoint2 key = new GridPoint2(col, row);
-//        OrderedSet<DSGItem> existing = gridMap.get(key);
-//        if(existing == null){
-//            gridMap.put(key, existing = new OrderedSet<>(8, 0.5f));
-//        }
-//        return existing;
-        return gridMap.computeIfAbsent(new GridPoint2(col, row), k -> new Array<>(true, 8, DSGItem.class));
+        // Sadly reimplementing computeIfAbsent() because RoboVM can't use it.
+        gridPoint2.set(col, row);
+        Array<DSGItem> v;
+        if ((v = gridMap.get(gridPoint2)) == null) {
+            Array<DSGItem> newValue = new Array<>(true, 8, DSGItem.class);
+            gridMap.put(gridPoint2.cpy(), newValue);
+            return newValue;
+        }
+        return v;
     }
 
     public void clear() {
@@ -47,6 +48,8 @@ public class SpatialGrid {
     }
 
     public Array<DSGItem> getDSGItems(int col, int row) {
-        return gridMap.getOrDefault(gridPoint2.set(col, row), EMPTY);
+        // Reimplementing getOrDefault() because RoboVM can't use it.
+        Array<DSGItem> got = gridMap.get(gridPoint2.set(col, row));
+        return got == null ? EMPTY : got;
     }
 }

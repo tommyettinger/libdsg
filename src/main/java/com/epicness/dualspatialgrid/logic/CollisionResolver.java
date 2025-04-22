@@ -1,5 +1,6 @@
 package com.epicness.dualspatialgrid.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.epicness.dualspatialgrid.Ball;
@@ -58,9 +59,10 @@ public class CollisionResolver {
             float overlap = minDist - dist;
 
             if (dist > 0) {
-                float nx = dx / dist;
-                float ny = dy / dist;
-                float pushAmount = (a.kinematic || b.kinematic) ? overlap : overlap / 2f;
+                float iDist = 1f / dist;
+                float nx = dx * iDist;
+                float ny = dy * iDist;
+                float pushAmount = (a.kinematic || b.kinematic) ? overlap : overlap * 0.5f;
                 if (!a.kinematic)
                     a.setPositionCentered(a.getCenterX() - nx * pushAmount, a.getCenterY() - ny * pushAmount);
                 if (!b.kinematic)
@@ -73,6 +75,6 @@ public class CollisionResolver {
 
     public void toggleIterations() {
         maxIterations = maxIterations == 1 ? 5 : maxIterations == 5 ? 10 : 1;
-        System.out.println("Max iterations: " + maxIterations);
+        if(Gdx.app != null) Gdx.app.debug("ITERATIONS", "Max iterations: " + maxIterations);
     }
 }

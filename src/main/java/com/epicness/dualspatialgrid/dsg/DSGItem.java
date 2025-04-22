@@ -8,8 +8,8 @@ import com.epicness.dualspatialgrid.utils.Movable;
 public abstract class DSGItem implements Movable {
 
     private boolean gridA;
-    BooleanConsumer gridAListener;
-    FloatFloatBiConsumer translationListener;
+    protected BooleanConsumer gridAListener;
+    protected FloatFloatBiConsumer translationListener;
     public int col, row;
     public boolean kinematic;
 
@@ -22,6 +22,10 @@ public abstract class DSGItem implements Movable {
         if (gridAListener != null) gridAListener.accept(gridA);
     }
 
+    /**
+     * Creates and returns a new Vector2 that holds the center position of this DSGItem.
+     * @return a new Vector2 containing the center x,y position of this DSGItem
+     */
     public Vector2 getCenter() {
         return new Vector2(getCenterX(), getCenterY());
     }
