@@ -1,6 +1,7 @@
 package com.epicness.dualspatialgrid.dsg;
 
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.NumberUtils;
 
 public class DSGCircle extends DSGItem {
@@ -45,6 +46,23 @@ public class DSGCircle extends DSGItem {
     }
 
     @Override
+    public void translate(float xAmount, float yAmount) {
+        circle.x += xAmount;
+        circle.y += yAmount;
+        if(translationListener != null) translationListener.accept(xAmount, yAmount);
+    }
+
+    @Override
+    public void translate(float amount) {
+        translate(amount, amount);
+    }
+
+    @Override
+    public void translate(Vector2 amount) {
+        translate(amount.x, amount.y);
+    }
+
+    @Override
     public void setPositionCentered(float x, float y) {
         setPosition(x - circle.radius, y - circle.radius);
     }
@@ -71,5 +89,15 @@ public class DSGCircle extends DSGItem {
         int x = NumberUtils.floatToRawIntBits(circle.x);
         int y = NumberUtils.floatToRawIntBits(circle.y);
         return r ^ (x << 10 | x >>> 22) ^ (y << 21 | y >>> 11);
+    }
+
+    @Override
+    public String toString() {
+        return "DSGCircle{" +
+                "col=" + col +
+                ", row=" + row +
+                ", kinematic=" + kinematic +
+                ", circle=" + circle +
+                '}';
     }
 }

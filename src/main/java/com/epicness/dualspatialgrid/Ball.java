@@ -21,19 +21,48 @@ public class Ball implements HasDSGItem {
 
         circle = new DSGCircle(size / 2f);
         circle.translate(size / 2f);
-        setTranslationListener(this::translate);
+        setTranslationListener(sprite::translate);
     }
 
     public void draw(SpriteBatch spriteBatch) {
         sprite.draw(spriteBatch);
     }
 
-    private void translate(float xAmount, float yAmount) {
-        sprite.translate(xAmount, yAmount);
+    public void draw(SpriteBatch spriteBatch, float parentAlpha) {
+        sprite.draw(spriteBatch, parentAlpha);
     }
 
     @Override
     public DSGCircle getDSGItem() {
         return circle;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Ball)) return false;
+
+        Ball ball = (Ball) o;
+        return sprite.equals(ball.sprite) && circle.equals(ball.circle);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sprite.hashCode();
+        result = 31 * result + circle.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Ball{" +
+                "sprite.bounds=" + sprite.getBoundingRectangle() +
+                ", sprite.texture=" + sprite.getTexture() +
+                ", sprite.color=" + sprite.getColor() +
+                ", circle=" + circle +
+                '}';
     }
 }
