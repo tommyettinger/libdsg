@@ -9,7 +9,7 @@ public class Solver<P extends HasVerletCircleAndDSG> {
     private final VerletIntegrator verletIntegrator;
     private final DSGSolver dsgSolver;
 
-    private final List<P> pieces;
+    public final List<P> pieces;
     private P piece;
 
     public Solver(VerletIntegrator verletIntegrator, DSGSolver dsgSolver, List<P> pieces) {

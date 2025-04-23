@@ -11,7 +11,7 @@ import com.epicness.dualspatialgrid.dsg.DualSpatialGrid;
 import com.epicness.dualspatialgrid.verlet.Input;
 import com.epicness.dualspatialgrid.verlet.Renderer;
 import com.epicness.dualspatialgrid.verlet.ColorfulBall;
-import com.epicness.dualspatialgrid.verlet.logic.Logic;
+import com.epicness.dualspatialgrid.verlet.logic.PhysicsControl;
 import com.epicness.dualspatialgrid.verlet.PieceSpawner;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import static com.epicness.dualspatialgrid.Constants.*;
 
 public class VerletDemo extends Game {
 
-    private Logic<ColorfulBall> logic;
+    private PhysicsControl<ColorfulBall> physics;
     private Renderer<ColorfulBall> renderer;
 
     @Override
@@ -29,7 +29,7 @@ public class VerletDemo extends Game {
         List<ColorfulBall> colorfulBalls = new ArrayList<>();
         Circle circle = new Circle(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f, WINDOW_HEIGHT * 0.5f);
         DualSpatialGrid dualSpatialGrid = new DualSpatialGrid(SIZING);
-        logic = new Logic<>(dualSpatialGrid, colorfulBalls, circle);
+        physics = new PhysicsControl<>(dualSpatialGrid, colorfulBalls, circle);
         PieceSpawner<ColorfulBall> spawner = new PieceSpawner<>(colorfulBalls, (x, y) -> new ColorfulBall(x, y, MathUtils.random(3f, 8f)));
         new Input(spawner);
         renderer = new Renderer<>(colorfulBalls, circle);
@@ -37,7 +37,7 @@ public class VerletDemo extends Game {
 
     @Override
     public void render() {
-        logic.update(Gdx.graphics.getDeltaTime());
+        physics.update(Gdx.graphics.getDeltaTime());
         renderer.render();
     }
 

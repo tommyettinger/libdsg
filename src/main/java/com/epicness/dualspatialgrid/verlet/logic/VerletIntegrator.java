@@ -52,14 +52,14 @@ public class VerletIntegrator {
     }
 
     public void applyRectangleConstraint(float lowX, float highX, float lowY, float highY) {
-        currentPos.x = Math.max(lowX, Math.min(highX, currentPos.x));
-        currentPos.y = Math.max(lowY, Math.min(highY, currentPos.y));
+        currentPos.x = Math.max(lowX + radius, Math.min(highX - radius, currentPos.x));
+        currentPos.y = Math.max(lowY + radius, Math.min(highY - radius, currentPos.y));
     }
 
     public void applyCircleConstraint() {
         dir.set(currentPos).sub(boundsCircle.x, boundsCircle.y);
         if (dir.len() > boundsCircle.radius - radius) {
-            currentPos.set(boundsCircle.x, boundsCircle.y).add(dir.nor().scl(boundsCircle.radius - radius));
+            currentPos.set(boundsCircle.x, boundsCircle.y).add(dir.setLength(boundsCircle.radius - radius));
         }
     }
 }
